@@ -1,0 +1,35 @@
+package com.mj.caloriecounter.model
+
+
+
+val exercises = listOf(
+    Exercise("پیاده‌روی آرام", 210),
+    Exercise("پیاده‌روی معمولی", 280),
+    Exercise("پیاده‌روی تند", 350),
+    Exercise("دویدن آرام", 500),
+    Exercise("دویدن متوسط", 700),
+    Exercise("دویدن سریع", 900),
+    Exercise("دوچرخه‌سواری آرام", 300),
+    Exercise("دوچرخه‌سواری متوسط", 500),
+    Exercise("دوچرخه‌سواری سریع", 700),
+    Exercise("بدنسازی سبک", 250),
+    Exercise("بدنسازی متوسط", 400),
+    Exercise("بدنسازی سنگین", 550),
+    Exercise("کراس‌فیت", 750),
+    Exercise("طناب زدن", 850),
+    Exercise("شنا", 500),
+    Exercise("شنای سریع", 700),
+    Exercise("فوتبال", 600),
+    Exercise("بسکتبال", 550),
+    Exercise("والیبال", 350),
+    Exercise("تنیس", 500),
+    Exercise("پینگ پنگ", 280),
+    Exercise("کوهنوردی", 550),
+    Exercise("صخره‌نوردی", 650),
+    Exercise("یوگا", 220),
+    Exercise("پیلاتس", 250),
+    Exercise("رقص", 400),
+    Exercise("ایروبیک", 500),
+    Exercise("بالا رفتن از پله", 650),
+    Exercise("قایقرانی", 450),
+)
