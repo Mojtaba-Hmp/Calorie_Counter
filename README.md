@@ -83,14 +83,16 @@ The application calculates the calories burned based on the selected activity an
 The burned calories are then included in the user's daily calorie balance.
 
 ## 📱 Screenshots
-
+<div align="center">
 <img width="220" height="474" alt="Screenshot_2026-07-18-10-34-49-227_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/c9fb8a64-5775-4e25-bcb3-1f1630faf6f3" />
 <img width="220" height="474" alt="Screenshot_2026-07-18-10-37-59-553_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/eeb4907b-3db0-49a2-80f0-6224b3fd1745" />
 <img width="220" height="474" alt="Screenshot_2026-07-18-10-36-30-496_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/75b1c318-900e-4cb0-826a-6ae540bfd1cf" />
+</div>
+<div align="center">
 <img width="220" height="474" alt="Screenshot_2026-07-18-10-40-02-526_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/521c5137-0b04-4721-9468-6fb1f3c52f80" />
 <img width="220" height="474" alt="Screenshot_2026-07-18-10-38-34-225_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/3274fed7-559e-41c6-b161-de763e270ecc" />
 <img width="220" height="474" alt="Screenshot_2026-07-18-10-39-23-224_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/7e05a579-e98f-40aa-a960-8d47830029f4" />
-
+</div>
 
 ## 🎯 Project Goal
 
