@@ -44,7 +44,7 @@ fun AddTodaySummaryBottomSheet(
     val sheetState = rememberModalBottomSheetState()
     val pagerState = rememberPagerState(pageCount = { 2 })
     val coroutineScope = rememberCoroutineScope()
-    
+
     // Collect the flows here
     val consumedFoods by viewModel.consumedFoods.collectAsState()
     val finishedExercises by viewModel.finishedExercises.collectAsState()
@@ -112,7 +112,7 @@ fun AddTodaySummaryBottomSheet(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                        .padding(start = 16.dp, top = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
@@ -121,7 +121,7 @@ fun AddTodaySummaryBottomSheet(
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
-                        text = if (pagerState.currentPage == 0)"مقدار" else "زمان",
+                        text = if (pagerState.currentPage == 0) "مقدار" else "زمان",
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(

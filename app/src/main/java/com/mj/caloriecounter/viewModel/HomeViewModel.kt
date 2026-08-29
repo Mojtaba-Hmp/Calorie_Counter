@@ -24,7 +24,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _consumedFoods: Flow<List<ConsumedFood>>
     private val _finishedExercises: Flow<List<FinishedExercise>>
-    
+
     val consumedFoods: StateFlow<List<ConsumedFood>>
     val finishedExercises: StateFlow<List<FinishedExercise>>
 
@@ -50,19 +50,36 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     // Totals as StateFlows
     val totalCalories = consumedFoods.map { it.sumOf { food -> food.calories } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
-        
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            0.0
+        )
+
     val totalProtein = consumedFoods.map { it.sumOf { food -> food.protein } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
-        
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            0.0
+        )
+
     val totalCarbs = consumedFoods.map { it.sumOf { food -> food.carbs } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
-        
+        .stateIn(viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            0.0
+        )
+
     val totalFats = consumedFoods.map { it.sumOf { food -> food.fat } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
-        
+        .stateIn(viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            0.0
+        )
+
     val totalBurntCalories = finishedExercises.map { it.sumOf { ex -> ex.calories } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
+        .stateIn(viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            0.0
+        )
 
     fun addConsumedFood(food: Food, amount: Double) {
         viewModelScope.launch {
@@ -82,11 +99,15 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun addFinishedExercised(exercise: Exercise, time: Int) {
         viewModelScope.launch {
             repository.insertExercise(
-                FinishedExercise(name = exercise.name, time = time, calories = timeCalculator(time, exercise.burntCaloriesPer1h).toDouble())
+                FinishedExercise(
+                    name = exercise.name,
+                    time = time,
+                    calories = timeCalculator(time, exercise.burntCaloriesPer1h).toDouble()
+                )
             )
         }
     }
-    
+
     fun deleteFood(food: ConsumedFood) {
         viewModelScope.launch {
             repository.deleteFood(food)

@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                                 backStack.add(Screen.AddFood)
                             },
                             onNavigateToAddActivity = {
-                                backStack.add(Screen.AddActivity)
+                                backStack.add(Screen.AddExercise)
                             }
                         )
                     }
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    is Screen.AddActivity -> NavEntry(key) {
+                    is Screen.AddExercise -> NavEntry(key) {
                         AddExerciseScreen (
                             onExerciseConfirmed ={ exercise,time ->
                                 homeViewModel.addFinishedExercised(exercise,time)
@@ -86,5 +86,5 @@ sealed class Screen {
     object AddFood : Screen()
 
     @Serializable
-    object AddActivity : Screen()
+    object AddExercise : Screen()
 }

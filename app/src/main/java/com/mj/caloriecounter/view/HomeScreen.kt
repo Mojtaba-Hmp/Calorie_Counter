@@ -173,7 +173,9 @@ fun HomeScreen(
                 }
 
                 // Left: Food
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Text(
                         text = totalCalories.toInt().toString().toPersianDigits(),
                         style = MaterialTheme.typography.headlineSmall
