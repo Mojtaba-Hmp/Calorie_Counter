@@ -19,9 +19,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mj.caloriecounter.model.Food
+import com.mj.caloriecounter.ui.theme.CalorieCounterTheme
 import com.mj.caloriecounter.viewModel.AddFoodViewModel
 
 @Composable
@@ -33,6 +36,43 @@ fun AddFoodScreen(
     var showAmountSheet by remember { mutableStateOf(false) }
     var selectedFood by remember { mutableStateOf<Food?>(null) }
 
+    AddFoodContent(
+        searchQuery = foodName,
+        onQueryChange = {
+            foodName = it
+            viewModel.searchFood(foodName)
+        },
+        searchResults = viewModel.foodResultList,
+        onFoodClick = { result ->
+            selectedFood = result
+            showAmountSheet = true
+        }
+
+    )
+
+    if (showAmountSheet && selectedFood != null) {
+        AddFoodAmountBottomSheet(
+            food = selectedFood!!,
+            onClose = { showAmountSheet = false },
+            onSaveSuccess = { amount ->
+                onFoodConfirmed(selectedFood!!, amount!!)
+                showAmountSheet = false
+                foodName = "" //Clearing the search bar
+                viewModel.searchFood("")
+
+            }
+
+        )
+    }
+}
+
+@Composable
+fun AddFoodContent(
+    searchQuery: String,
+    onQueryChange: (String) -> Unit,
+    searchResults: List<Food>,
+    onFoodClick: (Food) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -41,11 +81,10 @@ fun AddFoodScreen(
 
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = foodName,
+            value = searchQuery,
             textStyle = MaterialTheme.typography.headlineSmall,
             onValueChange = {
-                foodName = it
-                viewModel.searchFood(foodName)
+                onQueryChange(it)
             },
             placeholder = {
                 Text(
@@ -56,7 +95,7 @@ fun AddFoodScreen(
         )
 
         LazyColumn {
-            items(viewModel.foodResultList)
+            items(searchResults)
 
             { result ->
                 Text(
@@ -67,8 +106,7 @@ fun AddFoodScreen(
                         .fillMaxWidth()
                         .padding(top = 20.dp, bottom = 20.dp)
                         .clickable {
-                            selectedFood = result
-                            showAmountSheet = true
+                            onFoodClick(result)
                         }
                 )
                 HorizontalDivider(
@@ -76,25 +114,44 @@ fun AddFoodScreen(
                     DividerDefaults.Thickness,
                     DividerDefaults.color
                 )
-
             }
         }
     }
-    if (showAmountSheet && selectedFood != null) {
-        AddFoodAmountBottomSheet(
-            food = selectedFood!!,
-            onClose = { showAmountSheet = false },
-            onSaveSuccess = { amount ->
-                onFoodConfirmed(selectedFood!!,amount!!)
-                showAmountSheet = false
-                foodName = "" //Clearing the search bar
-                viewModel.searchFood("")
+}
 
-            }
-
+@Preview(showSystemUi = true, device = Devices.PIXEL_8)
+@Composable
+fun AddFoodPreview() {
+    CalorieCounterTheme {
+        AddFoodContent(
+            "موز",
+            onQueryChange = {},
+            searchResults = listOf(
+                Food(
+                    name = "سیب تخم‌مرغی شیرین",
+                    caloriesPer100g = 52.0,
+                    proteinsPer100g = 0.3,
+                    carbsPer100g = 14.0,
+                    fatsPer100g = 0.2
+                ),
+                Food(
+                    name = "گلابی",
+                    caloriesPer100g = 52.0,
+                    proteinsPer100g = 0.3,
+                    carbsPer100g = 14.0,
+                    fatsPer100g = 0.2
+                ),
+                Food(
+                    name = "انبه",
+                    caloriesPer100g = 52.0,
+                    proteinsPer100g = 0.3,
+                    carbsPer100g = 14.0,
+                    fatsPer100g = 0.2
+                )
+            ),
+            onFoodClick = {}
         )
     }
-
 }
 
 
