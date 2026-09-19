@@ -86,7 +86,7 @@ fun AddExerciseScreen(
             exercise = selectedExercise!!,
             onClose = { showTimeSheet = false },
             onSaveSuccess = { time ->
-                onExerciseConfirmed(selectedExercise!!, time)
+                onExerciseConfirmed(selectedExercise!!, time!!)
                 showTimeSheet = false
                 exerciseName = "" //Clearing the search bar
                 viewModel.searchExercise("")

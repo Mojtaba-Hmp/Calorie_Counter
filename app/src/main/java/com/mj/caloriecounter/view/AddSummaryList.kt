@@ -25,10 +25,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.mj.caloriecounter.utils.LogEntry
 import com.mj.caloriecounter.model.ConsumedFood
 import com.mj.caloriecounter.model.FinishedExercise
 import com.mj.caloriecounter.ui.theme.Dimens.Large
+import com.mj.caloriecounter.utils.LogEntry
 import com.mj.caloriecounter.utils.toPersianDigits
 
 
@@ -42,7 +42,7 @@ fun AddSummaryList(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -93,21 +93,21 @@ fun AddSummaryList(
                             text = result.name,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                         )
                         Spacer(
-                            modifier = Modifier.padding(end = 2.dp)
+                            modifier = Modifier.padding(end = 30.dp)
                         )
                         Text(
                             text = middleValue.toPersianDigits(),
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                         )
                         Spacer(
-                            modifier = Modifier.padding(end = 10.dp)
+                            modifier = Modifier.padding(end = 50.dp)
                         )
                         Text(
                             text = "${result.calories.toInt()} کالری".toPersianDigits(),
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                         )
                         Icon(
                             imageVector = Icons.Default.Delete,

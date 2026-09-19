@@ -2,8 +2,10 @@ package com.mj.caloriecounter.view
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -25,8 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mj.caloriecounter.model.Food
+import com.mj.caloriecounter.ui.theme.CalorieCounterTheme
 import com.mj.caloriecounter.ui.theme.GreenPrimary
 import com.mj.caloriecounter.utils.macroCalculator
 
@@ -34,13 +39,37 @@ import com.mj.caloriecounter.utils.macroCalculator
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddFoodAmountBottomSheet(
-    onClose: () -> Unit,
     food: Food,
-    onSaveSuccess: (foodAmount: Double?) -> Unit
+    onClose: () -> Unit,
+    onSaveSuccess: (Double?) -> Unit
 ) {
-    val context = LocalContext.current
-    val sheetState = rememberModalBottomSheetState()
+
     var foodAmount by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
+    AddFoodAmountContent(
+        food = food,
+        foodAmount = foodAmount,
+        onAmountChange = { foodAmount = it },
+        onConfirmClick = { amount ->
+                Toast.makeText(context, "ثبت شد", Toast.LENGTH_SHORT).show()
+                onSaveSuccess(amount)
+        },
+        onClose = onClose,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddFoodAmountContent(
+    food:Food,
+    foodAmount: String,
+    onAmountChange: (String) -> Unit,
+    onConfirmClick: (Double?) -> Unit,
+    onClose: () -> Unit,
+){
+
+    val sheetState = rememberModalBottomSheetState()
 
     ModalBottomSheet(
         sheetState = sheetState,
@@ -67,12 +96,12 @@ fun AddFoodAmountBottomSheet(
             ) {
                 OutlinedTextField(
                     modifier = Modifier
-                        .fillMaxWidth(fraction = 0.75f)
+                        .fillMaxWidth(0.75f)
                         .padding(bottom = 20.dp),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     value = foodAmount,
                     onValueChange = {
-                        foodAmount = it
+                        onAmountChange(it)
                     },
                     placeholder = {
                         Text(
@@ -106,10 +135,7 @@ fun AddFoodAmountBottomSheet(
                         disabledContentColor = Color.Black
                     ),
                     onClick = {
-                        if (amount != null) {
-                            Toast.makeText(context, "ثبت شد", Toast.LENGTH_SHORT).show()
-                            onSaveSuccess(amount)
-                        }
+                        onConfirmClick(amount)
                     },
                     modifier = Modifier
                         .fillMaxWidth(fraction = 0.75f)
@@ -131,6 +157,29 @@ fun AddMacroText(amount: Double, title: String, macro: Double) {
         text = "$title: ${macroCalculator(amount, macro)}",
         style = MaterialTheme.typography.titleLarge
     )
+}
+
+@Preview(showSystemUi = true, device = Devices.PIXEL_8)
+@Composable
+fun AddFoodAmountPreview() {
+    CalorieCounterTheme {
+        // Putting it inside a full screen Box forces the BottomSheet to open up on top of it!
+        Box(modifier = Modifier.fillMaxSize()) {
+            AddFoodAmountContent(
+                food = Food(
+                    name = "سیب تخم‌مرغی شیرین",
+                    caloriesPer100g = 52.0,
+                    proteinsPer100g = 0.3,
+                    carbsPer100g = 14.0,
+                    fatsPer100g = 0.2
+                ),
+                foodAmount = "120",
+                onAmountChange = {},
+                onConfirmClick = {},
+                onClose = {}
+            )
+        }
+    }
 }
 
 

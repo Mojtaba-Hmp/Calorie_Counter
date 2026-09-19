@@ -58,7 +58,7 @@ import com.mj.caloriecounter.viewModel.HomeViewModel
 @Composable
 fun HomeScreen(
     onNavigateToAddFood: () -> Unit,
-    onNavigateToAddActivity: () -> Unit,
+    onNavigateToAddExercise: () -> Unit,
     viewModel: HomeViewModel = viewModel()
 ) {
     var showSummarySheet by remember { mutableStateOf(false) }
@@ -100,8 +100,8 @@ fun HomeScreen(
                     onNavigateToAddFood()
                     showOptionSheet = false
                 },
-                onActivityClick = {
-                    onNavigateToAddActivity()
+                onExerciseClick = {
+                    onNavigateToAddExercise()
                     showOptionSheet = false
                 }
             )

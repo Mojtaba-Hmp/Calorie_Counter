@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                             onNavigateToAddFood = {
                                 backStack.add(Screen.AddFood)
                             },
-                            onNavigateToAddActivity = {
+                            onNavigateToAddExercise = {
                                 backStack.add(Screen.AddExercise)
                             }
                         )

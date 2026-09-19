@@ -17,10 +17,10 @@ fun macroCalculator(
 }
 
 fun timeCalculator(
-    activityTime: Int,
+    exerciseTime: Int,
     calories: Int
 ): Int {
 
-    return (activityTime * calories) / 60
+    return (exerciseTime * calories) / 60
 }
 

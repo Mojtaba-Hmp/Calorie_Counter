@@ -30,7 +30,11 @@ import com.mj.caloriecounter.ui.theme.TealSecondary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddOptionsBottomSheet(onClose: () -> Unit, onFoodClick: () -> Unit,onActivityClick: () -> Unit) {
+fun AddOptionsBottomSheet(
+    onClose: () -> Unit,
+    onFoodClick: () -> Unit,
+    onExerciseClick: () -> Unit
+) {
     val sheetState = rememberModalBottomSheetState()
     ModalBottomSheet(
         sheetState = sheetState,
@@ -57,8 +61,8 @@ fun AddOptionsBottomSheet(onClose: () -> Unit, onFoodClick: () -> Unit,onActivit
                 "فعالیت",
                 Icons.Default.FitnessCenter,
                 TealSecondary,
-                "AddActivity",
-                onClick = onActivityClick
+                "AddExercise",
+                onClick = onExerciseClick
             )
         }
     }
