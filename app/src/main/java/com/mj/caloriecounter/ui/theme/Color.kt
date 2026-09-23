@@ -15,7 +15,7 @@ val FatRed = Color(0xFFF44336)
 
 val AppBackground = Color(0xFFF8FAF8)
 val TextPrimary = Color(0xFF212121)
-val TextSecondary = Color(0xFF757575)
+val grayBackground = Color(0xFFF1F3F5)
 
 //Dark theme
 

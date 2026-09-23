@@ -5,6 +5,7 @@ data class Food(
     val caloriesPer100g: Double,
     val proteinsPer100g: Double,
     val carbsPer100g: Double,
-    val fatsPer100g: Double
+    val fatsPer100g: Double,
+    val unit : List<MeasurementUnit> = emptyList()
 )
 

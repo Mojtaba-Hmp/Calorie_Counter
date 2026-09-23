@@ -7,7 +7,7 @@ import java.util.Locale
 
 fun macroCalculator(
     foodAmount: Double,
-    macro: Double
+    macro: Double,
 ): String {
     val symbols = DecimalFormatSymbols(Locale.US)
 
