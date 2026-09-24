@@ -87,7 +87,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 ConsumedFood(
                     name = food.name,
                     amount = amount,
-                    calories = macroCalculator(amount, food.caloriesPer100g,).toDouble(),
+                    calories = macroCalculator(amount, food.caloriesPer100g).toDouble(),
                     protein = macroCalculator(amount, food.proteinsPer100g).toDouble(),
                     carbs = macroCalculator(amount, food.carbsPer100g).toDouble(),
                     fat = macroCalculator(amount, food.fatsPer100g).toDouble()

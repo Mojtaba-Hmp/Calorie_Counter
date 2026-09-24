@@ -2,6 +2,7 @@ package com.mj.caloriecounter.view
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
@@ -107,6 +109,8 @@ fun AddFoodAmountContent(
         listOf("گرم") + food.unit.map { it.name }
     }
 
+    var isFocused by remember { mutableStateOf(false) }
+
 
     ModalBottomSheet(
         sheetState = sheetState,
@@ -115,8 +119,8 @@ fun AddFoodAmountContent(
     ) {
         Column(
             modifier = Modifier
-                .padding(bottom = 10.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(bottom = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -125,11 +129,15 @@ fun AddFoodAmountContent(
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(bottom = 10.dp)
             )
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth(fraction = 0.75f)
                     .padding(bottom = 20.dp)
+                    .border(
+                        if (isFocused) 2.dp else 1.dp,
+                        if (isFocused) GreenPrimary else Color.Black,
+                        RoundedCornerShape(50.dp)
+                    )
                     .height(56.dp)
                     .clip(RoundedCornerShape(50.dp))
                     .background(grayBackground),
@@ -140,7 +148,10 @@ fun AddFoodAmountContent(
                 TextField(
                     modifier = Modifier
                         .fillMaxWidth(0.55f)
-                        .padding(start = 5.dp),
+                        .padding(start = 5.dp)
+                        .onFocusChanged { focusState ->
+                            isFocused = focusState.isFocused
+                        },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     value = foodAmount,
                     onValueChange = {
@@ -256,17 +267,18 @@ fun AddUnitsDropdownMenu(
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false }
         ) {
-
             options.forEach { option ->
                 DropdownMenuItem(
-                    modifier = Modifier.background(grayBackground),
+                    modifier = Modifier
+                        .background(grayBackground),
                     text = {
                         Text(
                             text = option,
                             modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
                     },
+
                     onClick = {
                         onOptionSelected(option)
                         isExpanded = false

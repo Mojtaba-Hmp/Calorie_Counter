@@ -1,21 +1,26 @@
 package com.mj.caloriecounter.view
 
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,6 +29,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
@@ -33,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.mj.caloriecounter.model.Exercise
 import com.mj.caloriecounter.ui.theme.CalorieCounterTheme
 import com.mj.caloriecounter.ui.theme.GreenPrimary
+import com.mj.caloriecounter.ui.theme.grayBackground
 import com.mj.caloriecounter.utils.timeCalculator
 
 
@@ -72,13 +80,17 @@ fun AddExerciseTimeContent(
 ) {
     val sheetState = rememberModalBottomSheetState()
 
+    var isFocused by remember { mutableStateOf(false) }
+
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onClose,
         containerColor = Color.White,
     ) {
         Column(
-            modifier = Modifier.padding(bottom = 10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -87,18 +99,29 @@ fun AddExerciseTimeContent(
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(bottom = 10.dp)
             )
-
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth(fraction = 0.75f)
+                    .padding(bottom = 20.dp)
+                    .border(
+                        if (isFocused) 2.dp else 1.dp,
+                        if (isFocused) GreenPrimary else Color.Black,
+                        RoundedCornerShape(50.dp)
+                    )
+                    .height(56.dp)
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(grayBackground),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
 
             ) {
-                OutlinedTextField(
+                TextField(
                     modifier = Modifier
-                        .fillMaxWidth(fraction = 0.75f)
-                        .padding(bottom = 20.dp),
+                        .fillMaxWidth()
+                        .padding(start = 5.dp)
+                        .onFocusChanged { focusState ->
+                            isFocused = focusState.isFocused
+                        },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     value = exerciseTime,
                     onValueChange = {
@@ -109,7 +132,14 @@ fun AddExerciseTimeContent(
                             text = "زمان فعالیت برحسب دقیقه",
                             style = MaterialTheme.typography.bodyLarge
                         )
-                    }
+                    },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
             }
 
