@@ -37,14 +37,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mj.caloriecounter.model.Exercise
+import com.mj.caloriecounter.model.dataclasses.Exercise
 import com.mj.caloriecounter.ui.theme.CalorieCounterTheme
-import com.mj.caloriecounter.ui.theme.GreenPrimary
-import com.mj.caloriecounter.ui.theme.grayBackground
 import com.mj.caloriecounter.utils.timeCalculator
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddExerciseTimeBottomSheet(
     onClose: () -> Unit,
@@ -85,7 +82,7 @@ fun AddExerciseTimeContent(
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onClose,
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.surface,
     ) {
         Column(
             modifier = Modifier
@@ -105,12 +102,12 @@ fun AddExerciseTimeContent(
                     .padding(bottom = 20.dp)
                     .border(
                         if (isFocused) 2.dp else 1.dp,
-                        if (isFocused) GreenPrimary else Color.Black,
+                        if (isFocused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                         RoundedCornerShape(50.dp)
                     )
                     .height(56.dp)
                     .clip(RoundedCornerShape(50.dp))
-                    .background(grayBackground),
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
 
@@ -164,10 +161,10 @@ fun AddExerciseTimeContent(
 
                 Button(
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenPrimary,
-                        contentColor = Color.White,
-                        disabledContainerColor = Color.Gray,
-                        disabledContentColor = Color.Black
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onSurface,
+                        disabledContainerColor = MaterialTheme.colorScheme.primary,
+                        disabledContentColor = MaterialTheme.colorScheme.onSurface
                     ),
                     onClick = {
                         onConfirmClick(time)
@@ -189,7 +186,7 @@ fun AddExerciseTimeContent(
 @Preview(showSystemUi = true, device = Devices.PIXEL_8)
 @Composable
 fun AddExerciseTimePreview() {
-    CalorieCounterTheme {
+    CalorieCounterTheme(darkTheme = true) {
         // Putting it inside a full screen Box forces the BottomSheet to open up on top of it!
         Box(modifier = Modifier.fillMaxSize()) {
             AddExerciseTimeContent(

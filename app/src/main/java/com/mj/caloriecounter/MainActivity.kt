@@ -4,13 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
+import com.mj.caloriecounter.ui.theme.AppThemeMode
 import com.mj.caloriecounter.ui.theme.CalorieCounterTheme
 import com.mj.caloriecounter.view.AddExerciseScreen
 import com.mj.caloriecounter.view.AddFoodScreen
@@ -23,17 +27,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CalorieCounterTheme {
-                MainNavigation()
+
+            val homeViewModel: HomeViewModel = viewModel()
+
+            val theme by homeViewModel.themeMode.collectAsState()
+
+            CalorieCounterTheme(
+                darkTheme = when (theme) {
+                    AppThemeMode.DARK -> true
+                    AppThemeMode.LIGHT -> false
+                    AppThemeMode.SYSTEM -> isSystemInDarkTheme()
+                }
+            ) {
+                MainNavigation(homeViewModel)
             }
         }
     }
 
     @Composable
-    fun MainNavigation() {
+    fun MainNavigation(homeViewModel: HomeViewModel) {
         val backStack = remember { mutableStateListOf<Any>(Screen.Home) }
 
-        val homeViewModel: HomeViewModel = viewModel()
+
         NavDisplay(
             backStack = backStack,
             onBack = {

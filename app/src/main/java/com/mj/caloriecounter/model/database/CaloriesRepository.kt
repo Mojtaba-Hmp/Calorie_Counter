@@ -1,7 +1,7 @@
 package com.mj.caloriecounter.model.database
 
-import com.mj.caloriecounter.model.ConsumedFood
-import com.mj.caloriecounter.model.FinishedExercise
+import com.mj.caloriecounter.model.dataclasses.ConsumedFood
+import com.mj.caloriecounter.model.dataclasses.FinishedExercise
 import kotlinx.coroutines.flow.Flow
 import java.util.Calendar
 

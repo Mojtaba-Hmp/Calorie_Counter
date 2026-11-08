@@ -1,4 +1,4 @@
-package com.mj.caloriecounter.model
+package com.mj.caloriecounter.model.dataclasses
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -43,14 +43,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mj.caloriecounter.model.Food
+import com.mj.caloriecounter.model.dataclasses.Food
 import com.mj.caloriecounter.ui.theme.CalorieCounterTheme
-import com.mj.caloriecounter.ui.theme.GreenPrimary
-import com.mj.caloriecounter.ui.theme.grayBackground
 import com.mj.caloriecounter.utils.macroCalculator
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddFoodAmountBottomSheet(
     food: Food,
@@ -115,7 +112,7 @@ fun AddFoodAmountContent(
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onClose,
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.surface,
     ) {
         Column(
             modifier = Modifier
@@ -135,12 +132,12 @@ fun AddFoodAmountContent(
                     .padding(bottom = 20.dp)
                     .border(
                         if (isFocused) 2.dp else 1.dp,
-                        if (isFocused) GreenPrimary else Color.Black,
+                        if (isFocused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                         RoundedCornerShape(50.dp)
                     )
                     .height(56.dp)
                     .clip(RoundedCornerShape(50.dp))
-                    .background(grayBackground),
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
 
@@ -197,10 +194,10 @@ fun AddFoodAmountContent(
 
                 Button(
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenPrimary,
-                        contentColor = Color.White,
-                        disabledContainerColor = Color.Gray,
-                        disabledContentColor = Color.Black
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onSurface,
+                        disabledContainerColor = MaterialTheme.colorScheme.primary,
+                        disabledContentColor = MaterialTheme.colorScheme.onSurface
                     ),
                     onClick = {
                         onConfirmClick(finalGrams)
@@ -231,7 +228,8 @@ fun AddUnitsDropdownMenu(
 
     ExposedDropdownMenuBox(
         modifier = Modifier
-            .clip(RoundedCornerShape(50.dp)),
+            .clip(RoundedCornerShape(50.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant),
         expanded = isExpanded,
         onExpandedChange = { isExpanded = it },
     ) {
@@ -263,14 +261,14 @@ fun AddUnitsDropdownMenu(
 
         ExposedDropdownMenu(
             modifier = Modifier
-                .background(grayBackground),
+                .background(MaterialTheme.colorScheme.surfaceVariant),
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false }
         ) {
             options.forEach { option ->
                 DropdownMenuItem(
                     modifier = Modifier
-                        .background(grayBackground),
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
                     text = {
                         Text(
                             text = option,
@@ -303,7 +301,7 @@ fun AddMacroText(amount: Double, title: String, macro: Double) {
 @Preview(showSystemUi = true, device = Devices.PIXEL_8)
 @Composable
 fun AddFoodAmountPreview() {
-    CalorieCounterTheme {
+    CalorieCounterTheme(darkTheme = true) {
         // Putting it inside a full screen Box forces the BottomSheet to open up on top of it!
         Box(modifier = Modifier.fillMaxSize()) {
             AddFoodAmountContent(

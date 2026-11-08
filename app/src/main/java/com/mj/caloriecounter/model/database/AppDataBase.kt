@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.mj.caloriecounter.model.ConsumedFood
-import com.mj.caloriecounter.model.FinishedExercise
+import com.mj.caloriecounter.model.dataclasses.ConsumedFood
+import com.mj.caloriecounter.model.dataclasses.FinishedExercise
 
 @Database(entities = [ConsumedFood::class, FinishedExercise::class], version = 1)
 abstract class AppDataBase : RoomDatabase() {

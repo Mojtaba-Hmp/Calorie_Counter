@@ -1,5 +1,6 @@
 package com.mj.caloriecounter.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -22,16 +24,17 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -43,6 +46,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mj.caloriecounter.model.dataclasses.MacroGoals
 import com.mj.caloriecounter.ui.theme.CarbYellow
 import com.mj.caloriecounter.ui.theme.Dimens.iconLarge
 import com.mj.caloriecounter.ui.theme.FatRed
@@ -61,8 +65,10 @@ fun HomeScreen(
     onNavigateToAddExercise: () -> Unit,
     viewModel: HomeViewModel = viewModel()
 ) {
+
     var showSummarySheet by remember { mutableStateOf(false) }
     var showOptionSheet by remember { mutableStateOf(false) }
+    var showSettingsDialog by remember { mutableStateOf(false) }
 
 
     val totalCalories by viewModel.totalCalories.collectAsState()
@@ -71,11 +77,21 @@ fun HomeScreen(
     val totalFats by viewModel.totalFats.collectAsState()
     val totalBurntCalories by viewModel.totalBurntCalories.collectAsState()
 
-    var goal by remember { mutableDoubleStateOf(2500.0) }
+    val calorieGoal by viewModel.calorieGoal.collectAsState()
+    val proteinGoal by viewModel.proteinGoal.collectAsState()
+    val carbGoal by viewModel.carbGoal.collectAsState()
+    val fatGoal by viewModel.fatGoal.collectAsState()
+
+    val currentTheme by viewModel.themeMode.collectAsState()
+
+
+    val currentGoals = MacroGoals(calorieGoal, proteinGoal, carbGoal, fatGoal)
+
+
     val remainingCalories by remember(
         totalCalories,
         totalBurntCalories
-    ) { derivedStateOf { goal - totalCalories + totalBurntCalories } }
+    ) { derivedStateOf { calorieGoal - totalCalories + totalBurntCalories } }
 
 
     Scaffold(
@@ -86,9 +102,46 @@ fun HomeScreen(
                 },
             )
         },
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
         floatingActionButtonPosition = FabPosition.Center,
 
-        ) { innerPadding ->
+
+        topBar = {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                TopAppBar(
+                    title = {
+                    },
+                    actions = {
+                        SettingsButton(
+                            onClick = {
+                                showSettingsDialog = true
+                            }
+                        )
+                    }
+                )
+            }
+
+        }
+
+
+    ) { innerPadding ->
+
+
+        if (showSettingsDialog) {
+            AddSettingsDialog(
+                onClose = {
+                    showSettingsDialog = false
+                },
+                currentGoals = currentGoals,
+                onGoalChange = { newGoals ->
+                    viewModel.updateGoals(newGoals)
+                },
+                currentTheme = currentTheme,
+                onThemeChange = { newTheme ->
+                    viewModel.updateTheme(newTheme)
+                }
+            )
+        }
 
 
         if (showOptionSheet) {
@@ -141,7 +194,12 @@ fun HomeScreen(
                 )
                 {
                     CircularProgressIndicator(
-                        progress = { 1f - (remainingCalories.toFloat() / goal.toFloat()).coerceIn(0f, 1f) },
+                        progress = {
+                            1f - (remainingCalories.toFloat() / calorieGoal.toFloat()).coerceIn(
+                                0f,
+                                1f
+                            )
+                        },
                         modifier = Modifier
                             .size(180.dp)
                             .focusable()
@@ -151,7 +209,7 @@ fun HomeScreen(
                         trackColor = LightGreenContainer,
                         strokeWidth = 12.dp,
                         color = when {
-                            remainingCalories >= goal -> LightGreenContainer
+                            remainingCalories >= calorieGoal -> LightGreenContainer
                             remainingCalories < 0 -> Color.Red
                             remainingCalories <= 200.0 -> CarbYellow
                             else -> GreenPrimary
@@ -167,7 +225,7 @@ fun HomeScreen(
                         )
                         Text(
                             text = "کالری مجاز",
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.titleMedium
                         )
                     }
                 }
@@ -206,25 +264,27 @@ fun HomeScreen(
                     MacroProgressBar(
                         title = "پروتئین",
                         current = totalProtein,
-                        goal = 140.0,
+                        goal = currentGoals.protein,
                         color = ProteinGreen
                     )
                     MacroProgressBar(
                         title = "کربوهیدرات",
                         current = totalCarbs,
-                        goal = 250.0,
+                        goal = currentGoals.carbs,
                         color = CarbYellow
                     )
                     MacroProgressBar(
                         title = "چربی",
                         current = totalFats,
-                        goal = 100.0,
+                        goal = currentGoals.fat,
                         color = FatRed
                     )
                 }
             }
 
         }
+
+
 
         if (showSummarySheet) {
             AddTodaySummaryBottomSheet(
@@ -248,6 +308,20 @@ fun AddButton(onClick: () -> Unit) {
             imageVector = Icons.Default.Add,
             contentDescription = "Add",
             Modifier.size(iconLarge)
+        )
+    }
+}
+
+@Composable
+fun SettingsButton(onClick: () -> Unit) {
+    IconButton(
+        onClick = onClick
+    ) {
+        Icon(
+            imageVector = Icons.Default.Settings,
+            contentDescription = "Settings",
+            Modifier.size(iconLarge),
+            MaterialTheme.colorScheme.primary
         )
     }
 }

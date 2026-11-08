@@ -1,5 +1,6 @@
 package com.mj.caloriecounter.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mj.caloriecounter.model.Food
+import com.mj.caloriecounter.model.dataclasses.Food
 import com.mj.caloriecounter.ui.theme.CalorieCounterTheme
 import com.mj.caloriecounter.viewModel.AddFoodViewModel
 
@@ -76,6 +77,7 @@ fun AddFoodContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(top = 50.dp, start = 20.dp, end = 20.dp, bottom = 20.dp),
     ) {
 
@@ -100,6 +102,7 @@ fun AddFoodContent(
             { result ->
                 Text(
                     text = result.name,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier

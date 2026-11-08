@@ -1,5 +1,6 @@
-package com.mj.caloriecounter.model
+package com.mj.caloriecounter.model.data
 
+import com.mj.caloriecounter.model.dataclasses.Exercise
 
 
 val exercises = listOf(

@@ -26,19 +26,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mj.caloriecounter.model.ConsumedFood
-import com.mj.caloriecounter.model.FinishedExercise
+import com.mj.caloriecounter.model.dataclasses.ConsumedFood
+import com.mj.caloriecounter.model.dataclasses.FinishedExercise
 import com.mj.caloriecounter.ui.theme.CalorieCounterTheme
 import com.mj.caloriecounter.ui.theme.GreenPrimary
 import com.mj.caloriecounter.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTodaySummaryBottomSheet(
     onClose: () -> Unit,
@@ -67,7 +65,7 @@ fun AddTodaySummaryContent(
     onDeleteFood: (ConsumedFood) -> Unit,
     onDeleteExercise: (FinishedExercise) -> Unit,
     onClose: () -> Unit
-){
+) {
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true // This forces it to open fully
     )
@@ -79,15 +77,14 @@ fun AddTodaySummaryContent(
         sheetState = sheetState,
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(topStart = 26.dp, topEnd = 26.dp),
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.surface,
     ) {
         Column(
             modifier = Modifier.fillMaxHeight(0.62f)
         ) {
-            @OptIn(ExperimentalMaterial3Api::class)
             (SecondaryTabRow(
                 selectedTabIndex = pagerState.currentPage,
-                containerColor = Color.White,
+                containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = GreenPrimary,
                 indicator = {
                     TabRowDefaults.SecondaryIndicator(
@@ -201,10 +198,10 @@ fun AddTodaySummaryContent(
 @Composable
 fun AddTodaySummaryPreview() {
     // Wrap it in your theme so colors look correct
-    CalorieCounterTheme {
+    CalorieCounterTheme(darkTheme = true) {
         AddTodaySummaryContent(
             consumedFoods = listOf(
-                ConsumedFood(name = "سیب", amount = 100.0, calories = 52.0)
+                ConsumedFood(name = "سیب زمینی", amount = 100.0, calories = 52.0)
             ),
             finishedExercises = listOf(
                 FinishedExercise(name = "پیاده‌روی", time = 30, calories = 150.0)

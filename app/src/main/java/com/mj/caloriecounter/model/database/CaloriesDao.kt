@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.mj.caloriecounter.model.ConsumedFood
-import com.mj.caloriecounter.model.FinishedExercise
+import com.mj.caloriecounter.model.dataclasses.ConsumedFood
+import com.mj.caloriecounter.model.dataclasses.FinishedExercise
 import kotlinx.coroutines.flow.Flow
 
 @Dao

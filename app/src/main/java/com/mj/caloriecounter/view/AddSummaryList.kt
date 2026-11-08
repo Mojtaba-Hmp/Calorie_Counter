@@ -25,8 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.mj.caloriecounter.model.ConsumedFood
-import com.mj.caloriecounter.model.FinishedExercise
+import com.mj.caloriecounter.model.dataclasses.ConsumedFood
+import com.mj.caloriecounter.model.dataclasses.FinishedExercise
 import com.mj.caloriecounter.ui.theme.Dimens.Large
 import com.mj.caloriecounter.utils.LogEntry
 import com.mj.caloriecounter.utils.toPersianDigits
@@ -42,7 +42,7 @@ fun AddSummaryList(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+            .padding(bottom = 16.dp, start = 8.dp, end = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -72,7 +72,7 @@ fun AddSummaryList(
                         .padding(bottom = 20.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.White
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant
                     ),
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 4.dp
@@ -92,6 +92,7 @@ fun AddSummaryList(
                             textAlign = TextAlign.Center,
                             text = result.name,
                             maxLines = 2,
+                            color = MaterialTheme.colorScheme.onSurface,
                             overflow = TextOverflow.Ellipsis,
                             style = MaterialTheme.typography.bodyLarge,
                         )
@@ -100,6 +101,7 @@ fun AddSummaryList(
                         )
                         Text(
                             text = middleValue.toPersianDigits(),
+                            color = MaterialTheme.colorScheme.onSurface,
                             style = MaterialTheme.typography.bodyLarge,
                         )
                         Spacer(
@@ -107,6 +109,7 @@ fun AddSummaryList(
                         )
                         Text(
                             text = "${result.calories.toInt()} کالری".toPersianDigits(),
+                            color = MaterialTheme.colorScheme.onSurface,
                             style = MaterialTheme.typography.bodyLarge,
                         )
                         Icon(
@@ -125,3 +128,7 @@ fun AddSummaryList(
         }
     }
 }
+
+/*fun deleteConfirmation(){
+
+}*/

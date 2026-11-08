@@ -1,6 +1,7 @@
 package com.mj.caloriecounter.view
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mj.caloriecounter.model.Exercise
+import com.mj.caloriecounter.model.dataclasses.Exercise
 import com.mj.caloriecounter.ui.theme.CalorieCounterTheme
 import com.mj.caloriecounter.viewModel.AddExerciseViewModel
 
@@ -80,47 +81,50 @@ fun AddExerciseContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(top = 50.dp, start = 20.dp, end = 20.dp, bottom = 20.dp),
     ) {
 
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = searchQuery,
-            textStyle = MaterialTheme.typography.headlineSmall,
-            onValueChange = {
-                onQueryChange(it)
-            },
-            placeholder = {
-                Text(
-                    text = "جست‌وجوی فعالیت ...",
-                    style = MaterialTheme.typography.headlineSmall
+            modifier = Modifier
+                .fillMaxWidth(),
+                    value = searchQuery,
+                    textStyle = MaterialTheme.typography.headlineSmall,
+                    onValueChange = {
+                        onQueryChange(it)
+                    },
+                    placeholder = {
+                        Text(
+                            text = "جست‌وجوی فعالیت ...",
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                    }
                 )
+
+                    LazyColumn {
+                items(searchResults)
+
+                { result ->
+                    Text(
+                        text = result.name,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp, bottom = 20.dp)
+                            .clickable {
+                                onExerciseClick(result)
+                            }
+                    )
+                    HorizontalDivider(
+                        modifier = Modifier,
+                        DividerDefaults.Thickness,
+                        DividerDefaults.color
+                    )
+
+                }
             }
-        )
-
-        LazyColumn {
-            items(searchResults)
-
-            { result ->
-                Text(
-                    text = result.name,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Normal,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 20.dp, bottom = 20.dp)
-                        .clickable {
-                            onExerciseClick(result)
-                        }
-                )
-                HorizontalDivider(
-                    modifier = Modifier,
-                    DividerDefaults.Thickness,
-                    DividerDefaults.color
-                )
-
-            }
-        }
     }
 }
 

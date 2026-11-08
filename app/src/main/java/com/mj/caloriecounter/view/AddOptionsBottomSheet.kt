@@ -39,7 +39,7 @@ fun AddOptionsBottomSheet(
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onClose,
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.surface,
     ) {
         Row(
             modifier = Modifier
