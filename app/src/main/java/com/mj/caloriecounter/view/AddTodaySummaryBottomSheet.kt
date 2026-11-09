@@ -54,7 +54,6 @@ fun AddTodaySummaryBottomSheet(
         onDeleteExercise = { viewModel.deleteExercise(it) },
         onClose = onClose
     )
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

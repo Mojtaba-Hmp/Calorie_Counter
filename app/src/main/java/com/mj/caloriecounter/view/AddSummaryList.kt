@@ -55,6 +55,34 @@ fun AddSummaryList(
 
     var itemToDelete by remember { mutableStateOf<LogEntry?>(null) }
 
+    AddSummaryListContent(
+        items = items,
+        emptyMessage = emptyMessage,
+        unit = unit,
+        onDeleteClick = { selectedItem ->
+            itemToDelete = selectedItem
+        }
+    )
+
+    DeleteConfirmation(
+        itemToDelete = itemToDelete,
+        onDismissRequest = { itemToDelete = null },
+        title = "حذف آیتم",
+        text = "آیا از حذف «${itemToDelete?.name}» اطمینان دارید؟",
+        onDelete = {
+            itemToDelete?.let { onDelete(it) }
+            itemToDelete = null
+        }
+    )
+}
+
+@Composable
+fun AddSummaryListContent(
+    items: List<LogEntry>,
+    emptyMessage: String,
+    unit: String,
+    onDeleteClick: (LogEntry) -> Unit
+){
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -135,7 +163,7 @@ fun AddSummaryList(
                             modifier = Modifier
                                 .size(Large)
                                 .clickable {
-                                    itemToDelete = result
+                                    onDeleteClick(result)
                                 }
                         )
                     }
@@ -143,17 +171,6 @@ fun AddSummaryList(
             }
         }
     }
-
-    DeleteConfirmation(
-        itemToDelete = itemToDelete,
-        onDismissRequest = { itemToDelete = null },
-        title = "حذف آیتم",
-        text = "آیا از حذف «${itemToDelete?.name}» اطمینان دارید؟",
-        onDelete = {
-            itemToDelete?.let { onDelete(it) }
-            itemToDelete = null
-        }
-    )
 }
 
 
