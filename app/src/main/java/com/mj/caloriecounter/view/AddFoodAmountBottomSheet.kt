@@ -206,7 +206,11 @@ fun AddFoodAmountContent(
                         .fillMaxWidth(fraction = 0.75f)
                         .padding(bottom = 20.dp, top = 20.dp),
                 ) {
-                    Text("ثبت", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        "ثبت",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.White
+                    )
                 }
 
             }
