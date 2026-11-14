@@ -243,7 +243,7 @@ fun DeleteConfirmation(
                             Text(
                                 text = "حذف",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.surface
+                                color = Color.White
 
                             )
                         }
@@ -260,6 +260,7 @@ fun DeleteConfirmation(
                             Text(
                                 text = "انصراف",
                                 style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
