@@ -6,27 +6,29 @@ The app allows users to search for foods and activities, view their nutritional 
 
 ## ✨ Features
 
-* 🔎 Search for foods and physical activities
-* 🍽️ Record consumed foods and their amounts
-* 🔥 Calculate consumed calories
-* 💪 Track protein, carbohydrates, and fat intake
-* 🏃 Record physical activities and their duration
-* 🔥 Calculate calories burned through activities
-* 📊 Display daily calorie and macronutrient progress
-* 📝 View a list of recorded foods and activities
-* 🗑️ Delete recorded items
-* 💾 Persist data using Room Database
+- 🔎 Search for foods and physical activities
+- 🍽️ Record consumed foods and their amounts
+- 🔥 Calculate consumed calories
+- 💪 Track protein, carbohydrates, and fat intake
+- 🏃 Record physical activities and their duration
+- 🔥 Calculate calories burned through activities
+- 📊 Display daily calorie and macronutrient progress
+- 🎯 Customize daily calorie and macronutrient goals
+- 🌙 Support for light and dark themes
+- 📝 View a list of recorded foods and activities
+- 🗑️ Delete recorded items
+- 💾 Persist data using Room Database
 
 ## 🛠️ Technologies
 
-* **Kotlin**
-* **Jetpack Compose**
-* **Material 3**
-* **Room Database**
-* **SQLite**
-* **Navigation 3**
-* **MVVM**
-* **Repository Pattern**
+- **Kotlin**
+- **Jetpack Compose**
+- **Material 3**
+- **Room Database**
+- **SQLite**
+- **Navigation 3**
+- **MVVM**
+- **Repository Pattern**
 
 ## 🏗️ Architecture
 
@@ -34,10 +36,10 @@ The application follows the **MVVM (Model–View–ViewModel)** architecture.
 
 The main responsibilities are separated as follows:
 
-* **View:** Responsible for displaying the UI and receiving user interactions.
-* **ViewModel:** Manages UI state, application logic, and calculations.
-* **Repository:** Acts as an abstraction layer between ViewModels and the database.
-* **Model:** Contains data models and database-related components.
+- **View:** Responsible for displaying the UI and receiving user interactions.
+- **ViewModel:** Manages UI state, application logic, and calculations.
+- **Repository:** Acts as an abstraction layer between ViewModels and the database.
+- **Model:** Contains data models and database-related components.
 
 This structure helps keep the UI layer independent from business logic and database operations, making the project easier to maintain and extend.
 
@@ -47,11 +49,11 @@ The application uses **Navigation 3** for navigation between screens.
 
 The main screens include:
 
-* Home
-* Add Food
-* Add Food Amount
-* Add Activity
-* Add Activity Duration
+- Home
+- Add Food
+- Add Food Amount
+- Add Activity
+- Add Activity Duration
 
 Navigation state is managed through a back stack, allowing users to move between screens and return to previous screens using the system back button.
 
@@ -67,12 +69,25 @@ The database is used to persist recorded foods and physical activities so that t
 
 Each food item contains nutritional information per 100 grams, including:
 
-* Calories
-* Protein
-* Carbohydrates
-* Fat
+- Calories
+- Protein
+- Carbohydrates
+- Fat
 
 When the user enters the consumed amount, the application calculates the corresponding nutritional values based on the entered quantity.
+
+## 🎯 Daily Goals
+
+Users can customize their daily calorie and macronutrient goals.
+
+The application allows users to adjust their targets for:
+
+- Daily calories
+- Protein
+- Carbohydrates
+- Fat
+
+These goals are used to display daily progress and help users track their nutritional intake according to their personal targets.
 
 ## 🏃 Physical Activities
 
@@ -82,16 +97,24 @@ The application calculates the calories burned based on the selected activity an
 
 The burned calories are then included in the user's daily calorie balance.
 
+## 🌙 Theme Support
+
+The application supports both **Light Mode** and **Dark Mode**, providing a consistent user experience across different appearance preferences.
+
 ## 📱 Screenshots
 <div align="center">
-<img width="220" height="474" alt="Screenshot_2026-07-18-10-34-49-227_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/c9fb8a64-5775-4e25-bcb3-1f1630faf6f3" />
-<img width="220" height="474" alt="Screenshot_2026-07-18-10-37-59-553_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/eeb4907b-3db0-49a2-80f0-6224b3fd1745" />
-<img width="220" height="474" alt="Screenshot_2026-07-18-10-36-30-496_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/75b1c318-900e-4cb0-826a-6ae540bfd1cf" />
+  <img width="163" height="351" alt="Home-Screen-Light" src="https://github.com/user-attachments/assets/b3aa4e63-18a1-4bc6-905c-99e1aae91e2c" />
+  <img width="163" height="351" alt="Add-Menu-Light" src="https://github.com/user-attachments/assets/cd71e52f-0c41-4016-ab91-d66f739154e9" />
+  <img width="163" height="351" alt="Add-Food-Light" src="https://github.com/user-attachments/assets/45a0d4b2-f386-4fba-a289-e275ffbc243f" />
+  <img width="163" height="351" alt="Add-Exercise-Light" src="https://github.com/user-attachments/assets/65498791-2654-4073-9236-e70bac9cbe45" />
+  <img width="163" height="351" alt="Food-Summary-Light" src="https://github.com/user-attachments/assets/2277eed6-c8b7-4521-8342-c0125e633d96" />
 </div>
 <div align="center">
-<img width="220" height="474" alt="Screenshot_2026-07-18-10-40-02-526_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/521c5137-0b04-4721-9468-6fb1f3c52f80" />
-<img width="220" height="474" alt="Screenshot_2026-07-18-10-38-34-225_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/3274fed7-559e-41c6-b161-de763e270ecc" />
-<img width="220" height="474" alt="Screenshot_2026-07-18-10-39-23-224_com mj caloriecounter-edit" src="https://github.com/user-attachments/assets/7e05a579-e98f-40aa-a960-8d47830029f4" />
+  <img width="163" height="351" alt="Exercise-Summary-Light" src="https://github.com/user-attachments/assets/77439b46-87fd-471a-9cd2-ac8ca2075c50" />
+  <img width="163" height="351" alt="Settings-Menu-Light" src="https://github.com/user-attachments/assets/6b8332b9-a1f4-4438-9b20-d0c193d54b3b" />
+  <img width="163" height="351" alt="Home-Screen-Dark" src="https://github.com/user-attachments/assets/698f683f-dae7-4573-9ce7-70229e1590fb" />
+  <img width="163" height="351" alt="Food-Summary-Dark" src="https://github.com/user-attachments/assets/c85328df-84b4-413c-ae89-75d2b7bcbc40" />
+  <img width="163" height="351" alt="Add-Food-Dark" src="https://github.com/user-attachments/assets/08deaba5-7e67-4b4c-b4e4-04f8809d48fc" />
 </div>
 
 ## 🎯 Project Goal
@@ -102,12 +125,16 @@ The main goal of this project is to develop a practical calorie-tracking applica
 
 Possible future improvements include:
 
-* User profile and personal calorie requirements
-* More detailed nutritional information
-* Daily and weekly statistics
-* Charts and reports
-* Barcode scanning
-* Health Connect integration
-* Meal and food category management
-Android Developer
+- User profile and personalized calorie requirements
+- More detailed nutritional information
+- Daily and weekly statistics
+- Charts and reports
+- Barcode scanning
+- Health Connect integration
+- Meal and food category management
+
+---
+
+**Android Developer**
+
 Kotlin • Jetpack Compose • Android
