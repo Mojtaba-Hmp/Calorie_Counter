@@ -137,7 +137,7 @@ fun AddSettingsDialog(
                                 horizontalArrangement = Arrangement.Center,
                             ) {
                                 Text(
-                                    text = "نسخه 1.0.0",
+                                    text = "نسخه 1.1",
                                     style = MaterialTheme.typography.bodyLarge
                                 )
                             }
